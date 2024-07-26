@@ -5,6 +5,9 @@ import edu.icet.pos.service.customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/customer")
 public class CustomerController {
@@ -28,5 +31,15 @@ public class CustomerController {
     @DeleteMapping(path = "/delete")
     public String deleteCustomer(@RequestBody Customer customer){
         return customerService.delete(customer);
+    }
+
+    @GetMapping(path = "/page/{pageNumber}/size/{pageSize}")
+    public List<Customer> getCustomerPerPage(@PathVariable int pageNumber, @PathVariable int pageSize){
+        return customerService.getPerPage(pageNumber, pageSize);
+    }
+
+    @GetMapping(path = "/count")
+    public long getCustomerCount(){
+        return customerService.count();
     }
 }

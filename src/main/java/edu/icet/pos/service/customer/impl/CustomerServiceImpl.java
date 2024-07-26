@@ -6,8 +6,11 @@ import edu.icet.pos.model.Customer;
 import edu.icet.pos.repository.CustomerRepository;
 import edu.icet.pos.service.customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -40,6 +43,18 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> getPerPage(int pageNumber, int pageSize) {
-        return List.of();
+        Page<CustomerEntity> customerEntityPage = customerRepository.findAll(PageRequest.of(pageNumber, pageSize));
+        List<Customer> customerList = new ArrayList<>();
+
+        customerEntityPage.forEach(customerEntity -> {
+            Customer customer = objectMapper.convertValue(customerEntity, Customer.class);
+            customerList.add(customer);
+        });
+        return customerList;
+    }
+
+    @Override
+    public long count() {
+        return customerRepository.count();
     }
 }

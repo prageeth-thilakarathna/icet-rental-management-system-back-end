@@ -10,4 +10,6 @@ public interface CustomerService {
     String delete(Customer customer);
 
     List<Customer> getPerPage(int pageNumber, int pageSize);
+
+    long count();
 }
