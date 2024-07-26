@@ -1,1 +1,1 @@
-Rental Management System - Back End
+Rental Management System (POS) - Back End
